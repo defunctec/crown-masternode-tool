@@ -1,3 +1,7 @@
+## WIP
+Please note that currently the documentation is out of sync with the development of the program, in particular in the area 
+related to starting masternodes. It will be improved according to the resources available. 
+
 # Crown Masternode Tool (CMT) - Forked from https://github.com/Bertrand256/dash-masternode-tool
 
 The main purpose of this application is to give masternode operators (MNOs) the ability to send the `start masternode` command through an easy to use graphical user interface if the masternode collateral is controlled by a hardware wallet such as Trezor, KeepKey or Ledger.
@@ -5,7 +9,7 @@ The main purpose of this application is to give masternode operators (MNOs) the 
 ## Feature list
 
 * Sending the `start masternode` command if the collateral is controlled by a hardware wallet
-* Transferring masternode earnings safely, without touching the 10,000 Crown funding transaction
+* Transferring masternode earnings safely, without touching the 10000 Crown funding transaction
 * Signing messages with a hardware wallet
 * Voting on proposals
 * Initialization/recovery of hardware wallets seeds
@@ -19,6 +23,14 @@ The main purpose of this application is to give masternode operators (MNOs) the 
 Most of the application features are accessible from the main program window:  
 ![Main window](doc/img/dmt-main-window.png)
 
+## Note
+
+The Crown network supports 2 kinds of incentivised nodes: masternodes and systemnodes. At this time the only difference between them is the amount of collateral required:
+ * 10000 for a Masternode
+ *   500 for a Systemnode
+
+This README uses the term "masternode" to refer to both kinds of node and the Crown Masternode Tool provides identical functionality for both kinds of node.
+ 
 ## Contents
 
  * [Masternodes](#masternodes)
@@ -48,18 +60,18 @@ Most of the application features are accessible from the main program window:
     * [macOS](doc/build-dmt-mac.md)
     * [Windows](doc/build-dmt-windows.md)
     * Linux
-       * [Ubuntu](doc/build-dmt-linux-ubuntu.md)
+       * [Ubuntu](doc/build-cmt-linux-ubuntu.md)
        * [Fedora](doc/build-dmt-linux-fedora.md)
  * [Downloads](https://github.com/Bertrand256/crown-masternode-tool/releases/latest)
  * [Changelog](changelog.md)
 
 ## Masternodes
 
-Crown masternodes are full nodes which are incentivized by receiving a share of the block reward as payment in return for the tasks they perform for the network, of which the most important include creating new blocks and processing both normal and *InstantSend* transactions. In order to run a masternode, apart from setting up a server which runs the software, you must dedicate 10,000 Crown as *collateral*, which is *"tied up"* in your node as long as you want it to be considered a masternode by the network. It is worth mentioning that the private key controlling the funds can (and for security reasons, should) be kept separately from the masternode server itself.
+Crown masternodes are full nodes which are incentivized by receiving a share of the block reward as payment in return for the tasks they perform for the network, of which the most important include participation in *InstantSend* transactions and *block generation* by the *MN-PoS* consensus mechanism. In order to run a masternode, apart from setting up a server which runs the software, you must dedicate 10000 Crown as *collateral*, which is *"tied up"* in your node as long as you want it to be considered a masternode by the network. It is worth mentioning that the private key controlling the funds can (and for security reasons, should) be kept separately from the masternode server itself.
 
-A server with the Crown daemon software installed will operate as a Crown full node, but before the rest of the network accepts it as a legitimate masternode, one more thing must happen: the person controlling the node must prove that they are also in control of the private key to the node's 10,000 Crown *collateral*. This is achieved by sending a special message to the network (`start masternode` message), signed by this private key.
+A server with the Crown daemon software installed will operate as a Crown full node, but before the rest of the network accepts it as a legitimate masternode, one more thing must happen: the person controlling the node must prove that they are also in control of the private key to the node's 10000 Crown *collateral*. This is achieved by sending a special message to the network (`start masternode` message), signed by this private key.
 
-This action can be carried out using the *Crown Core* reference software client. As can be expected, this requires sending 10,000 Crown to an address controlled by the *Crown Core* wallet. After the recent increase in the value of Crown and a burst in the amount of malware distributed over the Internet, you do not have to be paranoid to conclude that keeping large amounts of funds in a software wallet is not the most secure option. For these reasons, it is highly recommended to use a **hardware wallet** for this purpose.
+This action can be carried out using the *Crown Core* reference software client. As can be expected, this requires sending 10000 Crown to an address controlled by the *Crown Core* wallet. In view of the amount of malware distributed over the Internet, you do not have to be paranoid to conclude that keeping large amounts of funds in a software wallet is not the most secure option. For these reasons, it is highly recommended to use a **hardware wallet** for this purpose.
 
 # Configuration
 
@@ -81,10 +93,11 @@ Depending on your preferences (and skills) you can choose one of three possible 
 ## Masternode setup
 
 Here we make the following assumptions:
-  * You already have a server running the Crown daemon software (*crownd*) that you want to use as a masternode. If you don't, you will need to install and configure one first by following the guide on the [Crown Wiki](https://docs.crown.org/en/stable/masternodes/setup.html).
+
+  * You already have a server running the Crown daemon software (*crownd*) that you want to use as a masternode. If you don't, you will need to install and configure one first by following the guide on the [Crown Forum](https://forum.crown.tech/index.php?topic=7706.0).
   * We occasionally refer to the *crownd* configuration file, so it is assumed that *crownd* is running under a Linux operating system (OS), which is the most popular and recommended OS for this purpose.
   * Your server has a public IP address that will be visible on the Internet.
-  * You have set up a TCP port on which your *crownd* listens for incoming connections (usually 9999).
+  * You have set up a TCP port on which your *crownd* listens for incoming connections (usually 9341).
 
 Further configuration steps depend on whether you already have a masternode controlled by *Crown Core* which you want to migrate to a hardware wallet managed by *CMT*, or if you are setting up a new masternode.
 
@@ -96,7 +109,7 @@ Further configuration steps depend on whether you already have a masternode cont
 The application currently supports the following command-line parameters:
 * `--data-dir`: a path to a directory in which the application will create all the needed files, such as: configuration file, cache and log files; it can be useful for users who want to avoid leaving any of the application files on the computer - which by default are created in the user's home directory - and insted to keep them on an external drive
 * `--config`: a non-standard path to a configuration file. Example:
-  `CrownMasternodeTool.exe --config=C:\dmt-configs\config1.ini`
+  `CrownMasternodeTool.exe --config=C:\cmt-configs\config1.ini`
 
 
 
@@ -135,9 +148,10 @@ The steps are as follows:
   ![Crown address mismatch](doc/img/startmn-addr-mismatch-warning.png)  
   The most common reason for this error is mistyping the hardware wallet passphrase. Remember that different passphrases result in different Crown addresses for the same BIP32 path.
 
-7. Verification that the specified transaction ID exists, points to your collateral address, is unspent and is equal to exactly 10,000 Crown. Messages in case of failure:  
+7. Verification that the specified transaction ID exists, points to your collateral address, is unspent and is equal to exactly 10000 Crown. Messages in case of failure:  
   ![Could not find the specified transaction id](doc/img/startmn-tx-warning.png)  
-  ![Collateral transaction output should equal 10,000 Crown](doc/img/startmn-collateral-warning.png)  
+  ![Collateral transaction output should equal 10000 Crown](doc/img/startmn-collateral-warning.png)  
+
   If you decide to continue anyway, you probably won't be able to successfully start your masternode.
 
 8. Verification at the Crown network level that the specified transaction ID is valid. Message in case of failure:  
@@ -156,7 +170,7 @@ The steps are as follows:
 
 CMT version 0.9.4 and above allows you to transfer your masternode earnings. Unlike other Crown wallets, CMT gives you a 100% control over which *unspent transaction outputs* (utxo) you want to transfer. This has the same effect as the `Coin control` functionality implemented in the *Crown Core* wallet.
 
-The `Transfer funds` window shows all *UTXOs* of the currently selected Masternode (mode 1), all Masternodes in current configuration (mode 2) or any address controlled by a hardware wallet (mode 3). All *UTXOs* not used as collateral are initially selected. All collateral *UTXOs* (10,000 Crown) are initially hidden to avoid unintentionally spending collateral funds and thus breaking MN. You can show these hidden entries by unchecking the `Hide collateral utxos` option.
+The `Transfer funds` window shows all *UTXOs* of the currently selected Masternode (mode 1), all Masternodes in current configuration (mode 2) or any address controlled by a hardware wallet (mode 3). All *UTXOs* not used as collateral are initially selected. All collateral *UTXOs* (10000 Crown) are initially hidden to avoid unintentionally spending collateral funds and thus breaking MN. You can show these hidden entries by unchecking the `Hide collateral utxos` option.
 
 To show the `Transfer funds` window, click the `Tools` menu. Then, from the popup menu choose:
  * `Transfer funds from current Masternode's address` (mode 1)
@@ -218,7 +232,7 @@ The verification method described below is based on use of the Keybase applicati
 
 2. Change the current directory to the folder where the CMT release files were downloaded:
 
-   `cd /Users/<username>/dmt-dist`
+   `cd /Users/<username>/cmt-dist`
 
    After invoking the *list directory* command (`ls` for Mac/Linux, `dir` for Windows ) you should see both the archived executable (.tar.gz, .zip) and the corresponding signature file (.asc):
 

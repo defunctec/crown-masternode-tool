@@ -1,8 +1,8 @@
-## Building the Dash Masternode Tool executable on Ubuntu Linux
+## Building the Crown Masternode Tool executable on Ubuntu Linux
 
 ### Method based on physical or virtual linux machine
 
-An Ubuntu distribution with Python 3.6 is required to build DMT. This example uses Ubuntu 17.10, which comes with an appropriate version installed by default. You can verify the Python version by typing:
+An Ubuntu distribution with Python 3.6 is required to build CMT. This example uses Ubuntu 18.04, which comes with an appropriate version installed by default. You can verify the Python version by typing:
 
 ```
 python3 --version
@@ -10,37 +10,36 @@ python3 --version
 
 You should see a response similar to the following:
 
-  `Python 3.6.4`
+  `Python 3.6.8`
 
 After making sure that you have the correct Python version, execute the following commands from the terminal:
 
 ```
-[dmt@ubuntu /]# sudo apt-get update
-[dmt@ubuntu /]# sudo apt-get -y upgrade
-[dmt@ubuntu /]# sudo apt-get install libcurl4 -y
-[dmt@ubuntu /]# sudo apt-get -y install libudev-dev libusb-1.0-0-dev libfox-1.6-dev autotools-dev autoconf automake libtool libpython3-all-dev python3.6-dev python3-pip git cmake
-[dmt@ubuntu /]# sudo pip3 install virtualenv
-[dmt@ubuntu /]# sudo pip3 install --upgrade pip
-[dmt@ubuntu /]# cd ~
-[dmt@ubuntu /]# mkdir cmt && cd cmt
-[dmt@ubuntu /]# virtualenv -p python3.6 venv
-[dmt@ubuntu /]# . venv/bin/activate
-[dmt@ubuntu /]# pip install --upgrade setuptools
-[dmt@ubuntu /]# git clone https://github.com/defunctec/crown-masternode-tool
-[dmt@ubuntu /]# cd crown-masternode-tool/
-[dmt@ubuntu /]# pip install -r requirements.txt
-[dmt@ubuntu /]# pyinstaller --distpath=../dist/linux --workpath=../dist/linux/build crown_masternode_tool.spec
+[cmt@ubuntu /]# sudo apt-get update
+[cmt@ubuntu /]# sudo apt-get -y upgrade
+[cmt@ubuntu /]# sudo apt-get -y install libcurl4 libudev-dev libusb-1.0-0-dev libfox-1.6-dev autotools-dev autoconf automake libtool libpython3-all-dev python3.6-dev python3-pip git cmake
+[cmt@ubuntu /]# sudo pip3 install virtualenv
+[cmt@ubuntu /]# sudo pip3 install --upgrade pip
+[cmt@ubuntu /]# cd ~
+[cmt@ubuntu /]# mkdir cmt && cd cmt
+[cmt@ubuntu /]# virtualenv -p python3.6 venv
+[cmt@ubuntu /]# . venv/bin/activate
+[cmt@ubuntu /]# pip install --upgrade setuptools
+[cmt@ubuntu /]# git clone https://github.com/defunctec/crown-masternode-tool
+[cmt@ubuntu /]# cd crown-masternode-tool/
+[cmt@ubuntu /]# pip install -r requirements.txt
+[cmt@ubuntu /]# pyinstaller --distpath=../dist/linux --workpath=../dist/linux/build crown_masternode_tool.spec
 ```
 
 The following files will be created once the build has completed successfully:
 
-* Executable: `~/dmt/dist/linux/DashMasternodeTool`
-* Compressed executable: `~/dmt/dist/all/DashMasternodeTool_<verion_string>.linux.tar.gz`
+* Executable: `~/cmt/dist/linux/CrownMasternodeTool`
+* Compressed executable: `~/cmt/dist/all/CrownMasternodeTool_<verion_string>.linux.tar.gz`
 
 
-### Method based on Docker
+### TODO: Method based on Docker
 
-This method uses a dedicated **docker image** configured to carry out an automated build process for *Dash Masternode Tool*. The advantage of this method is its simplicity and the fact that it does not make any changes in the list of installed apps/libraries on your physical/virtual machine. All necessary dependencies are installed inside the Docker container. The second important advantage is that compilation can also be carried out on Windows or macOS (if Docker is installed), but keep in mind that the result of the build will be a Linux executable.
+This method uses a dedicated **docker image** configured to carry out an automated build process for *Crown Masternode Tool*. The advantage of this method is its simplicity and the fact that it does not make any changes in the list of installed apps/libraries on your physical/virtual machine. All necessary dependencies are installed inside the Docker container. The second important advantage is that compilation can also be carried out on Windows or macOS (if Docker is installed), but keep in mind that the result of the build will be a Linux executable.
 
 > **Note: Skip steps 3 and 4 if you are not performing this procedure for the first time (building a newer version of DMT, for example)**
 
@@ -93,7 +92,7 @@ mkdir -p build
 docker create --name dmtbuild -v $(pwd)/build:/root/dmt/dist -it bertrand256/build-dmt:ubuntu
 ```
 
-#### 5. Build the Dash Masternode Tool executable
+#### 5. Build the Crown Masternode Tool executable
 
 ```
 docker start -ai dmtbuild
